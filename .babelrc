@@ -3,9 +3,9 @@
     "es2015"
   ],
   "plugins": [
-    "typecheck", "syntax-flow", "transform-flow-strip-types",
-    "transform-runtime",
-    "transform-class-properties"
+//    "typecheck", "syntax-flow", "transform-flow-strip-types",
+    "transform-runtime"
+//    "transform-class-properties"
   ]
 }
 

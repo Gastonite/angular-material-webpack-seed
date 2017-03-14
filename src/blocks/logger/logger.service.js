@@ -3,17 +3,9 @@
  *
  * @ngInject
  */
-export default class LoggerService {
-  /**
-   * Constructor of the class.
-   *
-   * @param {$log}      $log
-   * @param {$injector} $injector
-   */
-  constructor($log, $injector) {
-    this.$log = $log;
-    this.$injector = $injector;
-  }
+export default ($log, $injector) => {
+
+  const service = {};
 
   /**
    * Method to create error message.
@@ -22,12 +14,12 @@ export default class LoggerService {
    * @param {Object}  [data]
    * @param {string}  [title]
    */
-  error(message: string, data: Object = {}, title: string = '') {
+  service.error = (message, data = {}, title = '') => {
     this.showToast(message, data, title);
 
     // noinspection JSUnresolvedFunction
-    this.$log.error(['Error:', message].join(' '), data, title);
-  }
+    $log.error(['Error:', message].join(' '), data, title);
+  };
 
   /**
    * Method to create info message.
@@ -36,12 +28,12 @@ export default class LoggerService {
    * @param {Object}  [data]
    * @param {string}  [title]
    */
-  info(message: string, data: Object = {}, title: string = '') {
+  service.info = (message, data = {}, title = '') => {
     this.showToast(message, data, title);
 
     // noinspection JSUnresolvedFunction
-    this.$log.info(['Info:', message].join(' '), data, title);
-  }
+    $log.info(['Info:', message].join(' '), data, title);
+  };
 
   /**
    * Method to create success message.
@@ -50,12 +42,12 @@ export default class LoggerService {
    * @param {Object}  [data]
    * @param {string}  [title]
    */
-  success(message: string, data: Object = {}, title: string = '') {
+  service.success = (message, data = {}, title = '') => {
     this.showToast(message, data, title);
 
     // noinspection JSUnresolvedFunction
-    this.$log.log(['Success:', message].join(' '), data, title);
-  }
+    $log.log(['Success:', message].join(' '), data, title);
+  };
 
   /**
    * Method to create warning message.
@@ -64,12 +56,12 @@ export default class LoggerService {
    * @param {Object}  [data]
    * @param {string}  [title]
    */
-  warning(message: string, data: Object = {}, title: string = '') {
+  service.warning = (message, data = {}, title = '') => {
     this.showToast(message, data, title);
 
     // noinspection JSUnresolvedFunction
-    this.$log.warn(['Warning:', message].join(' '), data, title);
-  }
+    $log.warn(['Warning:', message].join(' '), data, title);
+  };
 
   // noinspection JSUnusedGlobalSymbols
   /**
@@ -77,9 +69,9 @@ export default class LoggerService {
    *
    * @param {*} args
    */
-  log(...args) {
+  service.log = (...args) => {
     // noinspection JSUnresolvedFunction
-    this.$log.log(args);
+    $log.log(args);
   }
 
   /**
@@ -89,9 +81,9 @@ export default class LoggerService {
    * @param {Object}  [data]
    * @param {string}  [title]
    */
-  showToast(message: string, data: Object = {}, title: string = '') {
+  service.showToast = (message, data = {}, title = '') => {
     // noinspection JSUnresolvedFunction
-    this.$injector
+    $injector
       .get('$mdToast')
       .showSimple([
         title,
@@ -99,4 +91,5 @@ export default class LoggerService {
         (Object.keys(data).length ? data : ''),
       ].join(' '));
   }
-}
+
+};

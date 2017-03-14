@@ -3,31 +3,25 @@
  *
  * @ngInject
  */
-export default class ExceptionHandler {
-  config: {
-    appErrorPrefix: string
-  };
+export default () => {
 
-  // Constructor of the class.
-  constructor() {
-    this.config = {
-      appErrorPrefix: '',
-    };
-  }
+  const config = {
+    appErrorPrefix: '',
+  };
 
   /**
    * Configure method for the class.
    *
    * @param {string}  appErrorPrefix
    */
-  configure(appErrorPrefix: string) {
+  const configure = (appErrorPrefix) => {
     this.config.appErrorPrefix = appErrorPrefix;
+  };
+
+  return {
+    configure,
+    config,
+    $get: () => ({ config })
   }
 
-  // noinspection JSUnusedGlobalSymbols
-  $get() {
-    return {
-      config: this.config,
-    };
-  }
-}
+};

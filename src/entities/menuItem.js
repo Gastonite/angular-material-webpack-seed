@@ -1,24 +1,28 @@
 // Imports
-import MenuItemInterface from './menuItem.interface';
+// import MenuItemInterface from './menuItem.interface';
+// interface MenuItemInterface {
+//   title: string,
+//   state: string,
+//   access: string,
+//   hideLogged: boolean,
+//   params: any,
+//   items: MenuItemInterface[],
+//   open: boolean,
+// }
 
-/**
- * MenuItem class.
- *
- * @ngInject
- */
-export default class MenuItem implements MenuItemInterface {
-  /**
-   * Constructor of the class
-   *
-   * @param {MenuItemInterface}  item
-   */
-  constructor(item: Object) {
-    this.title = item.title;
-    this.state = item.state;
-    this.access = item.access;
-    this.hideLogged = !!item.hideLogged;
-    this.params = item.params || {};
-    this.items = (item.items || []).map(subItem => new MenuItem(subItem));
-    this.open = !!item.open;
-  }
-}
+const MenuItem = item => {
+
+  const menuItem = {};
+
+  menuItem.title = item.title;
+  menuItem.state = item.state;
+  menuItem.access = item.access;
+  menuItem.hideLogged = !!item.hideLogged;
+  menuItem.params = item.params || {};
+  menuItem.items = (item.items || []).map(MenuItem);
+  menuItem.open = !!item.open;
+
+  return menuItem;
+};
+
+export default MenuItem;

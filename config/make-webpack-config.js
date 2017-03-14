@@ -9,7 +9,8 @@ const NgAnnotatePlugin = require('ng-annotate-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SplitByPathPlugin = require('webpack-split-by-path');
 
-module.exports = function (options) {
+module.exports = options => {
+
   const entry = {
     main: './src/index',
   };
@@ -52,9 +53,7 @@ module.exports = function (options) {
   let stylesheetLoaders = [
     { test: /\.css$/, loaders: ['css-loader!postcss-loader'] },
     { test: /\.less$/, loaders: ['css-loader!postcss-loader!less-loader'] },
-    { test: /\.styl$/, loaders: ['css-loader!postcss-loader!stylus-loader'] },
-    { test: /\.scss$/, loaders: ['css-loader!postcss-loader!sass-loader?sourceMap'] },
-    { test: /\.sass$/, loaders: ['css-loader!postcss-loader!sass-loader?sourceMap&indentedSyntax'] },
+    { test: /\.styl$/, loaders: ['css-loader!postcss-loader!stylus-loader'] }
   ];
 
   const alias = {};
@@ -229,17 +228,7 @@ module.exports = function (options) {
     target: 'web',
     module: {
       preLoaders: [
-        {
-          test: /\.jsx?$/,
-          loaders: ['eslint'],
-          include: path.join(__dirname, '..', 'src'),
-        },
-        {
-          test: /\.scss$/,
-          loader: 'scsslint',
-          exclude: /node_modules/,
-          include: path.join(__dirname, '..', 'src'),
-        }
+
       ],
       loaders: ignoreLoaders
         .concat(jsLoaders)

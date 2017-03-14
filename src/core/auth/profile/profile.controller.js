@@ -8,7 +8,7 @@ export default class ProfileController {
    * @param {UserService} UserService
    * @param {Object}      _profileData
    */
-  constructor(UserService, _profileData: Object) {
+  constructor(UserService, _profileData) {
     this.user = UserService.getProfile();
     this.profile = _profileData;
   }

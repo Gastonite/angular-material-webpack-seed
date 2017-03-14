@@ -7,7 +7,7 @@ import 'mdi/css/materialdesignicons.css';
 import 'angular-loading-bar/build/loading-bar.css';
 
 // Main SCSS file for application
-import './index.scss';
+import './index.styl';
 
 // Application modules
 import core from './core/core.module';
@@ -28,4 +28,4 @@ const app = angular.module('app', [
 
 appConfiguration(app);
 
-angular.bootstrap(document.documentElement, ['app']);
+angular.bootstrap(document.documentElement, ['app'], { strictDi: true });

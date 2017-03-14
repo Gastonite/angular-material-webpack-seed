@@ -3,7 +3,7 @@ import angular from 'angular';
 import routes from './login.routes';
 
 // CSS styles for login
-import './login.scss';
+import './login.styl';
 
 /**
  * @desc  Module initialize.

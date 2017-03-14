@@ -5,75 +5,63 @@ import MenuItem from './../entities/menuItem';
  * @desc  MenuItemService class.
  * @ngInject
  */
-export default class MenuItemService {
-  /**
-   * Constructor of the class.
-   *
-   * @param {ui.router.state.$state}  $state
-   * @param {$mdSidenav}              $mdSidenav
-   * @param {AuthService}             AuthService
-   * @param {UserService}             UserService
-   * @param {UserRoles}               UserRoles
-   */
-  constructor(
-    $state, $mdSidenav,
-    AuthService, UserService, UserRoles,
-  ) {
-    this.$state = $state;
-    this.$mdSidenav = $mdSidenav;
-    this.authService = AuthService;
-    this.userService = UserService;
 
-    // Actual menu items
-    this.items = [
-      {
-        title: 'About',
-        state: 'modules.about',
-        access: UserRoles.ROLE_ANON,
-      },
-      {
-        title: 'Profile',
-        state: 'auth.profile',
-        access: UserRoles.ROLE_LOGGED,
-      },
-      {
-        title: 'Examples',
-        state: 'modules.examples',
-        access: UserRoles.ROLE_USER,
-        items: [
-          {
-            title: 'Authors',
-            state: false,
-            access: UserRoles.ROLE_USER,
-          },
-          {
-            title: 'Books',
-            state: false,
-            access: UserRoles.ROLE_USER,
-          },
-        ],
-      },
-      {
-        title: 'Login',
-        state: 'auth.login',
-        access: UserRoles.ROLE_ANON,
-        hideLogged: true,
-      },
-      {
-        title: 'Logout',
-        state: 'auth.logout',
-        access: UserRoles.ROLE_LOGGED,
-      },
-    ].map(item => new MenuItem(item));
-  }
+const MenuItemService = ($state, $mdSidenav, AuthService, UserService, UserRoles) => {
+
+  const service = {};
+
+  // Actual menu items
+  service.items = [
+    {
+      title: 'About',
+      state: 'modules.about',
+      access: UserRoles.ROLE_ANON,
+    },
+    {
+      title: 'Profile',
+      state: 'auth.profile',
+      access: UserRoles.ROLE_LOGGED,
+    },
+    {
+      title: 'Examples',
+      state: 'modules.examples',
+      access: UserRoles.ROLE_USER,
+      items: [
+        {
+          title: 'Authors',
+          state: false,
+          access: UserRoles.ROLE_USER,
+        },
+        {
+          title: 'Books',
+          state: false,
+          access: UserRoles.ROLE_USER,
+        },
+      ],
+    },
+    {
+      title: 'Login',
+      state: 'auth.login',
+      access: UserRoles.ROLE_ANON,
+      hideLogged: true,
+    },
+    {
+      title: 'Logout',
+      state: 'auth.logout',
+      access: UserRoles.ROLE_LOGGED,
+    },
+  ].map(item => new MenuItem(item));
+
 
   /**
    * Getter method for all menu items.
    *
    * @returns {MenuItem[]}
    */
-  getItems() {
-    const iterator = (item: MenuItem) => {
+  service.getItems = () => {
+
+    const iterator = (item) => {
+
       if (item.items.length) {
         item.items.filter(iterator);
 
@@ -82,17 +70,17 @@ export default class MenuItemService {
         }
       }
 
-      let hasAccess = this.authService.authorize(item.access);
+      let hasAccess = AuthService.authorize(item.access);
 
       if (hasAccess && item.hideLogged) {
-        hasAccess = !this.userService.getProfile();
+        hasAccess = !UserService.getProfile();
       }
 
       return hasAccess;
     };
 
-    return this.items.filter(iterator);
-  }
+    return service.items.filter(iterator);
+  };
 
   /**
    * Method to change application state to another one.
@@ -101,11 +89,16 @@ export default class MenuItemService {
    * @param {Object}    [params]
    * @returns {promise}
    */
-  goToPage(item: MenuItem, params: Object = {}) {
+  service.goToPage = (item, params = {}) => {
+
     const parameters = (Object.is({}, params) && !Object.is({}, item.params)) ? item.params : params;
 
-    this.$mdSidenav('left').close();
+    $mdSidenav('left').close();
 
-    return (this.$state.current.name === item.state) ? this.$state.reload() : this.$state.go(item.state, parameters);
-  }
-}
+    return ($state.current.name === item.state) ? $state.reload() : $state.go(item.state, parameters);
+  };
+
+  return service;
+};
+
+export default MenuItemService;

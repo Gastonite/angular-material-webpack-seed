@@ -36,7 +36,7 @@ export default class AuthService {
    * @param {Object}  credentials
    * @returns {*|Promise.<TResult>}
    */
-  authenticate(credentials: Object) {
+  authenticate(credentials) {
     return this.$http
       .post(`${this.config.API_URL}auth/getToken`, credentials)
       .then(
@@ -58,7 +58,7 @@ export default class AuthService {
    * @param {string} refreshToken
    * @returns {*|Promise.<TResult>}
    */
-  refreshToken(refreshToken: string) {
+  refreshToken(refreshToken) {
     return this.$http
       .post(
         `${this.config.API_URL}auth/refreshToken`,
@@ -81,7 +81,7 @@ export default class AuthService {
    * @param {Object}  data
    * @param {boolean} [skipRefreshToken]
    */
-  storeTokenData(data: Object, skipRefreshToken: boolean = false) {
+  storeTokenData(data, skipRefreshToken = false) {
     // Store JWT data
     this.$localStorage.token = data.token;
 
@@ -99,7 +99,7 @@ export default class AuthService {
    * @param {string} role
    * @returns {boolean}
    */
-  authorize(role: string) {
+  authorize(role) {
     // Anon routes are available for everyone
     if (role === this.roles.ROLE_ANON) {
       return true;
@@ -116,7 +116,7 @@ export default class AuthService {
    *
    * @param {boolean} [suppress]
    */
-  isAuthenticated(suppress: boolean = true) {
+  isAuthenticated(suppress = true) {
     if (!this.userService.getProfile() && !suppress) {
       this.logger.error('Auth error!');
     }
@@ -130,7 +130,7 @@ export default class AuthService {
    * @param {boolean} [suppress]
    * @returns {*|Promise.<TResult>}
    */
-  logout(suppress: boolean = false) {
+  logout(suppress = false) {
     if (!suppress) {
       this.logger.success('Logged out successfully.');
     }

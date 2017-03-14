@@ -3,7 +3,7 @@ import angular from 'angular';
 import routes from './about.routes';
 
 // CSS styles for 'about' page
-import './about.scss';
+import './about.styl';
 
 /**
  * @desc  Module initialize.

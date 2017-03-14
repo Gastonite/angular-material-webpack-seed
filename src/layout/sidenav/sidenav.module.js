@@ -2,7 +2,7 @@
 import angular from 'angular';
 
 // CSS styles for sidenav
-import './sidenav.scss';
+import './sidenav.styl';
 
 /**
  * @desc  Module initialize.

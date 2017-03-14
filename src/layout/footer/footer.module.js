@@ -2,7 +2,7 @@
 import angular from 'angular';
 
 // CSS styles for footer
-import './footer.scss';
+import './footer.styl';
 
 /**
  * @desc  Module initialize.

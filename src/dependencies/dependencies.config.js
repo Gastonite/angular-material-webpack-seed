@@ -17,7 +17,7 @@ export default ($httpProvider, $mdThemingProvider, jwtOptionsProvider) => {
   // Configure angular-material theme
   $mdThemingProvider
     .theme('default')
-    .primaryPalette('blue-grey')
+    .primaryPalette('teal')
     .accentPalette('blue')
   ;
 

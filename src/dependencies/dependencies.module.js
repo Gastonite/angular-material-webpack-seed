@@ -11,9 +11,7 @@ import uiRouter from 'angular-ui-router';
 
 import config from './dependencies.config';
 
-/**
- * @ngInject
- */
+// @ngInject
 export default angular
   .module('app.dependencies', [
     angularAnimate, angularAria, angularJWT, angularLoadingBar, angularMaterial, angularSanitize,

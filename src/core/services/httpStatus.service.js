@@ -99,7 +99,7 @@ export default class HttpStatusService {
    * @param {number} statusCode
    * @returns {string}
    */
-  getStatusCodeText(statusCode: number) {
+  getStatusCodeText(statusCode) {
     let output = `Unknown HTTP status '${statusCode}' what is this?`;
 
     if ({}.hasOwnProperty.call(this.messages, statusCode)) {

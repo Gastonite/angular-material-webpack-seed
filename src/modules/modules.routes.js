@@ -3,6 +3,7 @@
  * @param RouterHelper
  */
 export default function routing(RouterHelper) {
+
   const states = [{
     state: 'modules',
     config: {

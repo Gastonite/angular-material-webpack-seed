@@ -6,42 +6,29 @@ import angular from 'angular';
  *
  * @ngInject
  */
-export default class RouterHelper {
-  config: any;
+export default ($locationProvider, $stateProvider, $urlRouterProvider) => {
 
-  /**
-   * Constructor for the class.
-   *
-   * @param {$locationProvider}   $locationProvider
-   * @param {$stateProvider}      $stateProvider
-   * @param {$urlRouterProvider}  $urlRouterProvider
-   */
-  constructor($locationProvider, $stateProvider, $urlRouterProvider) {
-    this.$locationProvider = $locationProvider;
-    this.$stateProvider = $stateProvider;
-    this.$urlRouterProvider = $urlRouterProvider;
+  const helper = {};
 
-    // We want to use HTML5 mode with routing
-    // noinspection JSUnresolvedFunction
-    this.$locationProvider.html5Mode(true);
+  // We want to use HTML5 mode with routing
+  // noinspection JSUnresolvedFunction
+  $locationProvider.html5Mode(true);
 
-    // Default config for routerHelper
-    this.config = {
-      docTitle: undefined,
-      resolveAlways: {},
-    };
-  }
+  // Default config for routerHelper
+  helper.config = {
+    docTitle: undefined,
+    resolveAlways: {},
+  };
 
   /**
    * Method to override default config values.
    *
    * @param {Object} configOverride
    */
-  configure(configOverride: Object) {
-    angular.extend(this.config, configOverride);
-  }
+  helper.configure = (configOverride) => {
+    angular.extend(helper.config, configOverride);
+  };
 
-  // noinspection JSUnusedGlobalSymbols
   /**
    * @ngInject
    *
@@ -58,10 +45,10 @@ export default class RouterHelper {
    *    }
    *  }}
    */
-  $get($rootScope, $location, $state, LoggerService) {
-    const $urlRouterProvider = this.$urlRouterProvider;
-    const $stateProvider = this.$stateProvider;
-    const config = this.config;
+  helper.$get = ($rootScope, $location, $state, LoggerService) => {
+    const $urlRouterProvider = $urlRouterProvider;
+    const $stateProvider = $stateProvider;
+    const config = helper.config;
     const stateCounts = {
       errors: 0,
       changes: 0,
@@ -78,7 +65,7 @@ export default class RouterHelper {
      * @param {Object[]}  states
      * @param {string}    [otherwisePath]
      */
-    function configureStates(states: Object[], otherwisePath: string = '') {
+    function configureStates(states, otherwisePath = '') {
       // Iterate specified states, add resolves to each one and attach state to router
       states.forEach((state) => {
         $stateProvider.state(state.state, state.config);
@@ -112,7 +99,7 @@ export default class RouterHelper {
      * @returns {boolean|string}
      * @private
      */
-    function _getDestination(toState: Object) {
+    function _getDestination(toState) {
       return (toState && (toState.title || toState.name)) || 'unknown target';
     }
 
@@ -124,7 +111,7 @@ export default class RouterHelper {
      * @returns {string}
      * @private
      */
-    function _getErrorMessage(error: Object, toState: Object) {
+    function _getErrorMessage(error, toState) {
       return `Error routing to ${_getDestination(toState)}. ${error.data || ''} <br /> 
               ${error.statusText || ''}: ${error.status || ''}`;
     }
@@ -165,7 +152,7 @@ export default class RouterHelper {
      * @private
      */
     function _updateDocumentTitle() {
-      $rootScope.$on('$stateChangeSuccess', (event: any, toState: any) => {
+      $rootScope.$on('$stateChangeSuccess', (event, toState) => {
         stateCounts.changes += 1;
         handlingStateChangeError = false;
 
@@ -199,5 +186,6 @@ export default class RouterHelper {
     _init();
 
     return service;
-  }
-}
+  };
+
+};

@@ -19,7 +19,7 @@ export default class ExceptionFactory {
    * @param message
    * @returns {function(*=)}
    */
-  catcher(message: string) {
+  catcher(message) {
     return (reason) => {
       this.logger.error(message, reason);
     };
